@@ -23,21 +23,23 @@ function home(ServerRequest $request): Response
     $lang = detectLang($request, 'en');
 
     $content = 'Hello, ' . $name . '| Lang - ' . $lang . '!';
-    $stream = new Stream(fopen('php://memory', 'rb+'));
-    $stream->write($content);
 
-    return new Response(
-        $stream,
-        200
-    );
+    $response = new Response()
+        ->withHeader('Content-Type', 'text/html');
+    $response->getContent()->write($content);
+    return $response;
 }
 
 $request = createServerRequestFromGlobals();
 
+if (str_starts_with($request->getHeader('Content-Type'), 'application/x-www-form-urlencoded')) {
+    parse_str($request->getBody()->getContents(), $data);
+    $request = $request->withParsedBody($data);
+}
+
 $response = home($request);
 
 $response = $response
-    ->withHeader('Content-type', 'text/html; charset=utf-8')
     ->withHeader('X-Frame-Options', 'DENY');
 
 emitResponseToSapi($response);

@@ -55,9 +55,32 @@ final class ServerRequest
         return $this->uri;
     }
 
+    public function withParsedBody(?array $body): self
+    {
+        $clone = clone $this;
+        $clone->parsedBody = $body;
+        return $clone;
+    }
+
     public function getHeaders(): array
     {
         return $this->headers;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHeader(string $key): string
+    {
+        /** @var string|list<string> $value */
+        $value = $this->headers[$key] ?? '';
+
+        if (is_array($value)) {
+            /** @var list<string> $value */
+            return implode(', ', $value);
+        }
+
+        return $value;
     }
 
     public function getParsedBody(): ?array

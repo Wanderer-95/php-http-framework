@@ -29,23 +29,24 @@ final class ResponseTest extends TestCase
         $response = new Response($resource, 200);
 
         $response2 = $response
-            ->withHeader('Content-type', 'text/html; charset=utf-8')
-            ->withHeader('X-Frame-Options', 'DENY');
+            ->withHeader('Content-type', 'text/html')
+            ->withHeader('X-Frame-Options', 'DENY')
+            ->withAddedHeader('Content-type', 'charset=utf-8');
 
         $response = $response
-            ->withHeader('Content-type', 'text/html; charset=utf-8')
+            ->withHeader('Content-type', 'text/html')
             ->withHeader('X-Frame-Options', 'DENY');
 
-        self::assertEquals('text/html; charset=utf-8', $response->getHeader('Content-type'));
-        self::assertEquals('DENY', $response->getHeader('X-Frame-Options'));
+        self::assertEquals(['text/html'], $response->getHeader('Content-type'));
+        self::assertEquals(['DENY'], $response->getHeader('X-Frame-Options'));
         self::assertEquals([
-            'Content-type' => 'text/html; charset=utf-8',
-            'X-Frame-Options' => 'DENY',
+            'Content-type' => ['text/html'],
+            'X-Frame-Options' => ['DENY'],
         ], $response->getHeaders());
 
         self::assertEquals([
-            'Content-type' => 'text/html; charset=utf-8',
-            'X-Frame-Options' => 'DENY',
+            'Content-type' => ['text/html', 'charset=utf-8'],
+            'X-Frame-Options' => ['DENY'],
         ], $response2->getHeaders());
     }
 }
