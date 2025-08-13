@@ -1,0 +1,86 @@
+<?php
+
+namespace Framework\Http\Request;
+
+final class Uri
+{
+    private string $scheme;
+    private string $host;
+    private ?int $port;
+    private string $user;
+    private string $pass;
+    private string $path;
+    private string $query;
+    private string $fragment;
+
+    public function __construct(string $uri)
+    {
+        $data = parse_url($uri);
+
+        $this->scheme = $data['scheme'] ?? '';
+        $this->host = $data['host'] ?? '';
+        $this->port = $data['port'] ?? null;
+        $this->user = $data['user'] ?? '';
+        $this->pass = $data['pass'] ?? '';
+        $this->path = $data['path'] ?? '';
+        $this->query = $data['query'] ?? '';
+        $this->fragment = $data['fragment'] ?? '';
+    }
+
+    public function getScheme(): string
+    {
+        return $this->scheme;
+    }
+
+    public function getUserInfo(): string
+    {
+        return $this->user . ($this->pass !== '' ? ':' . $this->pass : '');
+    }
+
+    public function getHost(): string
+    {
+        return $this->host;
+    }
+
+    public function getPort(): ?int
+    {
+        return $this->port;
+    }
+
+    public function getUser(): string
+    {
+        return $this->user;
+    }
+
+    public function getPass(): string
+    {
+        return $this->pass;
+    }
+
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    public function getQuery(): string
+    {
+        return $this->query;
+    }
+
+    public function getFragment(): string
+    {
+        return $this->fragment;
+    }
+
+    public function __toString()
+    {
+        return $this->scheme
+            . '://'
+            . ($this->getUserInfo() ? $this->getUserInfo() . '@' : '')
+            . $this->getHost()
+            . ($this->getPort() !== null ? ':' . $this->getPort() : '')
+            . $this->getPath()
+            . ($this->getQuery() ? '?' . $this->getQuery() : '')
+            . ($this->getFragment() ? '#' . $this->getFragment() : '');
+    }
+}

@@ -1,0 +1,31 @@
+GET http://localhost:40
+
+###
+
+GET http://localhost:40/?name[]=Alexey
+
+###
+
+GET http://localhost:40/?name=Alexey
+
+###
+
+GET http://localhost:40/?lang=de
+
+###
+
+POST http://localhost:40
+Content-Type: application/x-www-form-urlencoded
+
+lang=de
+
+###
+
+GET http://localhost:40
+Cookie: lang=de
+
+###
+
+GET http://localhost:40
+Accept-Language: ru-ru, en-us
+
