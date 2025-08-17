@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace DetectLang;
 
 use Framework\Http\Request\ServerRequest;
 use Framework\Http\Request\Stream;

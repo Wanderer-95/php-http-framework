@@ -9,11 +9,12 @@
   "autoload-dev": {
     "psr-4": {
       "Test\\App\\": "tests/App/",
-      "Test\\Framework\\": "tests/Framework/"
+      "Test\\Framework\\": "tests/Framework/",
+      "Test\\DetectLang\\": "tests/DetectLang/"
     },
     "files": [
       "src/Framework/Http/createServerRequestFromGlobals.php",
-      "src/App/detectLang.php",
+      "src/DetectLang/detectLang.php",
       "src/Framework/Http/emitResponseToSapi.php"
     ]
   },

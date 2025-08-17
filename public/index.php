@@ -16,7 +16,7 @@ function home(ServerRequest $request): Response
 {
     $name = $_GET['name'] ?? 'Guest';
 
-    if (! is_string($name)) {
+    if (!is_string($name)) {
         return new Response(new Stream(fopen('php://memory', 'rb')), 400, []);
     }
 
@@ -43,3 +43,28 @@ $response = $response
     ->withHeader('X-Frame-Options', 'DENY');
 
 emitResponseToSapi($response);
+
+
+class User
+{
+    private string $name = 'Alex';
+
+    private function sayHello(): string
+    {
+        return 'Hello, wewqeqeqorld!';
+    }
+}
+
+$surname = 'Petrovich32132131';
+
+$getName = function (): string {
+    return $this->sayHello();
+};
+$user = new User();
+$bound = $getName->bindTo($user, User::class);
+
+echo "<br>";
+echo "<br>";
+echo "<br>";
+echo "<br>";
+echo $bound();
